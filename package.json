@@ -1,0 +1,26 @@
+{
+  "name": "PieceJS",
+  "version": "0.0.1",
+  "description": "JavaScript particle engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mysticPrg/PieceJS.git"
+  },
+  "keywords": [
+    "particle"
+  ],
+  "author": "mysticPrg",
+  "license": "BSD 2-clause",
+  "bugs": {
+    "url": "https://github.com/mysticPrg/PieceJS/issues"
+  },
+  "homepage": "https://github.com/mysticPrg/PieceJS",
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  }
+}
