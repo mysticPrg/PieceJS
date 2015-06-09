@@ -6,7 +6,15 @@
 
     var $ = $ || doc.querySelector.bind(doc);
 
-    var Circle = function (x, y, size) {
+    var Position = function (x, y) {
+
+    };
+
+    var GravityPoint = function () {
+
+    };
+
+    var Particle = function (x, y, size) {
         var _this = this,
             HALF_PI = 360 * Math.PI / 180;
         this.x = x || 0;
@@ -33,7 +41,7 @@
         this.height = (opt && opt.height) || 480;
         this.fps = (opt && opt.fps) || 60;
 
-        this.circles = null;
+        this.particles = null;
         this.count = 5000;
 
         this.foreCanvas = document.createElement('canvas');
@@ -54,7 +62,7 @@
             _this.backContext.clearRect(0, 0, _this.width, _this.height);
             _this.backContext.beginPath();
             for (i = 0; i < _this.count; i++) {
-                _this.circles[i].draw(_this.backContext);
+                _this.particles[i].draw(_this.backContext);
             }
             _this.backContext.closePath();
             _this.backContext.fill();
@@ -69,17 +77,17 @@
             var i = 0;
 
             for (i = 0; i < _this.count; i++) {
-                _this.circles[i].x = getRandom(0, _this.width);
-                _this.circles[i].y = getRandom(0, _this.height);
+                _this.particles[i].x = getRandom(0, _this.width);
+                _this.particles[i].y = getRandom(0, _this.height);
             }
         };
 
         this.createCircles = function () {
-            _this.circles = [];
+            _this.particles = [];
             var i = 0;
 
             for (i = 0; i < _this.count; i++) {
-                _this.circles.push(new Circle(getRandom(0, _this.width), getRandom(0, _this.height), getRandom(1, 1)));
+                _this.particles.push(new Particle(getRandom(0, _this.width), getRandom(0, _this.height), getRandom(1, 1)));
             }
         };
 
