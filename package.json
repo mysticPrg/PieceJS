@@ -2,25 +2,33 @@
   "name": "PieceJS",
   "version": "0.0.1",
   "description": "JavaScript particle engine",
-  "main": "index.js",
+  "main": "dist/piece.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": ""
+    "build": "npm install && grunt",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/mysticPrg/PieceJS.git"
   },
   "keywords": [
+    "javascript",
     "particle"
   ],
-  "author": "mysticPrg",
-  "license": "BSD 2-clause",
+  "author": "mysticPrg <mysticPrg@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mysticPrg/PieceJS/issues"
   },
   "homepage": "https://github.com/mysticPrg/PieceJS",
   "devDependencies": {
-    "grunt": "^0.4.5"
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-watch": "^0.6.1"
   }
 }
