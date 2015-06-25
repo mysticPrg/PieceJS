@@ -6,37 +6,78 @@
         (function () {
             var viewElm, particle, width = 800, height = 500;
 
+            var Process = function (opt) {
+                this.name = (opt && opt.name) || 'name';
+                this.init = (opt && opt.init) || function () {};
+                this.proc = (opt && opt.proc) || function () {};
+            };
+
+            Process.prototype._init = function (target) {
+                target._scope = target._scope || {};
+                target._scope[this.name] = target._scope[this.name] || {};
+                this.init(target, target._scope[this.name]);
+            };
+
+            Process.prototype._run = function (target) {
+                this.proc(target, target._scope[this.name]);
+            };
+
+            var globalGravity = new Process({
+                name: 'globalGravity',
+                init: function (target, scope) {
+                    scope.weight = 1;
+                    scope.weight_add = 0;
+                },
+                proc: function (target, scope) {
+                    target.y += scope.weight_add;
+                    scope.weight_add += scope.weight;
+
+                    if (scope.weight_add >= 20) {
+                        scope.weight_add = 20;
+                    }
+                }
+            });
+
             function globalGravityProc() {
+                var name = globalGravityProc.name;
                 globalGravityProc.init = globalGravityProc.init || function () {
-                            this.weight = this.weight || 1;
-                            this.weight_add = this.weight_add || 0;
+                            this[name] = this[name] || {};
+                            this[name].weight = this[name].weight || 9.8;
+                            this[name].weight_add = this[name].weight_add || 0;
                         };
 
-                this.y += this.weight_add;
-                this.weight_add += this.weight;
+                if (this[name]) {
+                    this.y += this[name].weight_add;
+                    this[name].weight_add += this[name].weight;
 
-                if ( this.weight_add >= 30 ) {
-                    this.weight_add = 30;
-                }
+                    if (this[name].weight_add >= 20) {
+                        this[name].weight_add = 20;
+                    }
 //
 //                if (this.y >= height - 10) {
 //                    this.y = height - 10;
 //                }
+                }
             }
 
             function decreaseProc() {
+                var name = decreaseProc.name;
+
                 function decrease(x, to_x, factor) {
                     return (to_x - x) * factor;
                 }
 
                 decreaseProc.init = decreaseProc.init || function () {
-                            this.to_x = this.to_x || width /2;
+                            this[name] = this[name] || {};
+                            this.to_x = this.to_x || width / 2;
                             this.to_y = this.to_y || 0;
-                            this.speed = this.speed || 0.07;
+                            this[name].speed = this[name].speed || 0.07;
                         };
 
-                this.x += decrease(this.x, this.to_x, this.speed);
-                this.y += decrease(this.y, this.to_y, this.speed);
+                if (this[name]) {
+                    this.x += decrease(this.x, this.to_x, this[name].speed);
+                    this.y += decrease(this.y, this.to_y, this[name].speed);
+                }
             }
 
             function Particle(opt) {
@@ -45,17 +86,13 @@
                 this.x = (opt && opt.x) || 0;
                 this.y = (opt && opt.y) || 0;
 
-                this.elm = (function (elm) {
-                    elm.style.width = '10px';
-                    elm.style.height = '10px';
-                    elm.style.backgroundColor = 'white';
-                    elm.style.position = 'absolute';
-                    return elm;
-                })(document.createElement('div'));
-//                this.elm = document.createElement('div');
-//                this.elm.style.backgroundColor = 'black';
-//                this.elm.style.width = 10;
-//                this.elm.style.height = 10;
+                this.elm = document.createElement('div');
+                (function (s) {
+                    s.width = '10px';
+                    s.height = '10px';
+                    s.backgroundColor = 'white';
+                    s.position = 'absolute';
+                })(this.elm.style);
                 viewElm.appendChild(this.elm);
 
                 this.render = function () {
@@ -66,17 +103,19 @@
                 this.addProc = function (proc) {
                     this.procs = this.procs || [];
 
-                    proc.apply({});
-                    if (typeof proc.init === 'function') {
-                        proc.init.apply(this);
-                    }
-
-                    this.procs.push(proc.bind(this));
+//                    proc.apply({});
+//                    if (typeof proc.init === 'function') {
+//                        proc.init.apply(this);
+//                    }
+//                    this.procs.push(proc.bind(this));
+                    proc._init(this);
+                    this.procs.push(proc);
                 };
 
                 this.animate = function () {
+                    var particle = this;
                     this.procs.forEach(function (proc) {
-                        proc();
+                        proc._run(particle);
                     });
                 };
             }
@@ -87,10 +126,11 @@
                 viewElm.style.height = height + 'px';
 
                 particle = new Particle();
-                particle.addProc(globalGravityProc);
-                particle.addProc(decreaseProc);
+//                particle.addProc(globalGravityProc);
+//                particle.addProc(decreaseProc);
+                particle.addProc(globalGravity);
 
-                viewElm.onclick = function(e) {
+                viewElm.onclick = function (e) {
                     particle.to_x = e.offsetX;
                     particle.to_y = e.offsetY;
                 };
