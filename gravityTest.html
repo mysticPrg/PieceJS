@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <script>
+        (function () {
+            var viewElm, particle, width = 800, height = 500;
+
+            function globalGravityProc() {
+                globalGravityProc.init = globalGravityProc.init || function () {
+                            this.weight = this.weight || 1;
+                            this.weight_add = this.weight_add || 0;
+                        };
+
+                this.y += this.weight_add;
+                this.weight_add += this.weight;
+
+                if ( this.weight_add >= 30 ) {
+                    this.weight_add = 30;
+                }
+//
+//                if (this.y >= height - 10) {
+//                    this.y = height - 10;
+//                }
+            }
+
+            function decreaseProc() {
+                function decrease(x, to_x, factor) {
+                    return (to_x - x) * factor;
+                }
+
+                decreaseProc.init = decreaseProc.init || function () {
+                            this.to_x = this.to_x || width /2;
+                            this.to_y = this.to_y || 0;
+                            this.speed = this.speed || 0.07;
+                        };
+
+                this.x += decrease(this.x, this.to_x, this.speed);
+                this.y += decrease(this.y, this.to_y, this.speed);
+            }
+
+            function Particle(opt) {
+                this.procs = [];
+
+                this.x = (opt && opt.x) || 0;
+                this.y = (opt && opt.y) || 0;
+
+                this.elm = (function (elm) {
+                    elm.style.width = '10px';
+                    elm.style.height = '10px';
+                    elm.style.backgroundColor = 'white';
+                    elm.style.position = 'absolute';
+                    return elm;
+                })(document.createElement('div'));
+//                this.elm = document.createElement('div');
+//                this.elm.style.backgroundColor = 'black';
+//                this.elm.style.width = 10;
+//                this.elm.style.height = 10;
+                viewElm.appendChild(this.elm);
+
+                this.render = function () {
+                    this.elm.style.top = this.y + 'px';
+                    this.elm.style.left = this.x + 'px';
+                };
+
+                this.addProc = function (proc) {
+                    this.procs = this.procs || [];
+
+                    proc.apply({});
+                    if (typeof proc.init === 'function') {
+                        proc.init.apply(this);
+                    }
+
+                    this.procs.push(proc.bind(this));
+                };
+
+                this.animate = function () {
+                    this.procs.forEach(function (proc) {
+                        proc();
+                    });
+                };
+            }
+
+            window.onload = function () {
+                viewElm = document.querySelector('#view');
+                viewElm.style.width = width + 'px';
+                viewElm.style.height = height + 'px';
+
+                particle = new Particle();
+                particle.addProc(globalGravityProc);
+                particle.addProc(decreaseProc);
+
+                viewElm.onclick = function(e) {
+                    particle.to_x = e.offsetX;
+                    particle.to_y = e.offsetY;
+                };
+
+                requestAnimationFrame(renderLoop);
+                setInterval(logicLoop, 1000 / 60);
+            };
+
+            function renderLoop() {
+                particle.render();
+                window.requestAnimationFrame(renderLoop);
+            }
+
+            function logicLoop() {
+                particle.animate();
+            }
+        })();
+    </script>
+
+    <style>
+        body {
+            margin: 0;
+            border: 0;
+        }
+
+        #view {
+            background-color: #0066bb;
+        }
+    </style>
+</head>
+
+<body>
+<div id="view"></div>
+</body>
+</html>
