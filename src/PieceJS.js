@@ -2,7 +2,7 @@
  * Created by myticPrg on 2015-08-23.
  */
 
-define('PieceJS', ['Particle'], function(Particle) {
+define('PieceJS', ['Object/Particle'], function(Particle) {
     function getRandom(min, max) {
         var range = max - min;
         return Math.round(Math.random() * range) + min;

@@ -8,12 +8,12 @@
     <script>
         window.onload = function() {
             require.config({
-                baseUrl: '../src'
+                baseUrl: 'src'
             });
 
-            require(['PieceJS'], function(PieceJS) {
-                var screenElm = document.querySelector('#screen');
-                new PieceJS(screenElm);
+            require(['Object/Particle'], function(Particle) {
+                var p = new Particle(10, 20, 100);
+                console.log(p);
             });
         };
     </script>
