@@ -5,6 +5,7 @@ var del = require('del');
 var Server = require('karma').Server;
 var coveralls = require('gulp-coveralls');
 var jsdoc = require("gulp-jsdoc");
+var jshint = require('gulp-jshint');
 
 gulp.task('default', ['build']);
 
@@ -17,14 +18,14 @@ gulp.task('doc', function() {
     });
 });
 
-gulp.task('test', function (done) {
+gulp.task('test', ['clean', 'jshint'], function (done) {
     new Server({
         singleRun: true,
         configFile: __dirname + '/karma.conf.js'
     }, done).start();
 });
 
-gulp.task('travis-test', function (done) {
+gulp.task('travis-test', ['clean', 'jshint'], function (done) {
     new Server({
         singleRun: true,
         configFile: __dirname + '/karma.conf.js',
@@ -37,7 +38,14 @@ gulp.task('coveralls', function() {
         .pipe(coveralls());
 });
 
-gulp.task('build', ['clean', 'test', 'amdclean', 'uglify']);
+gulp.task('jshint', ['clean'], function() {
+    return gulp.src('./src/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
+        .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('build', ['clean', 'jshint', 'test', 'amdclean', 'uglify']);
 
 gulp.task('clean', function (done) {
     del([
@@ -46,7 +54,7 @@ gulp.task('clean', function (done) {
     ], done);
 });
 
-gulp.task('amdclean', ['clean', 'test'], function (done) {
+gulp.task('amdclean', ['clean', 'jshint', 'test'], function (done) {
     var requirejs = require('requirejs');
 
     requirejs.optimize({
@@ -69,7 +77,7 @@ gulp.task('amdclean', ['clean', 'test'], function (done) {
     });
 });
 
-gulp.task('uglify', ['clean', 'test', 'amdclean'], function () {
+gulp.task('uglify', ['clean', 'jshint', 'test', 'amdclean'], function () {
     return gulp.src('dist/PieceJS.js')
         .pipe(uglify())
         .pipe(concat('PieceJS.min.js'))
