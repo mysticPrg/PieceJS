@@ -13,6 +13,13 @@ gulp.task('test', function (done) {
     }, done).start();
 });
 
+gulp.task('travis-test', function (done) {
+    new Server({
+        singleRun: true,
+        configFile: __dirname + '/karma.travis.conf.js'
+    }, done).start();
+});
+
 gulp.task('build', ['clean', 'amdclean', 'uglify']);
 
 gulp.task('clean', function (done) {
