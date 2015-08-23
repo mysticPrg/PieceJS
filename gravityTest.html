@@ -27,6 +27,103 @@
                 init: function (target, scope) {
                     scope.weight = 1;
                     scope.weight_add = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 },
                 proc: function (target, scope) {
                     target.y += scope.weight_add;
@@ -38,47 +135,47 @@
                 }
             });
 
-            function globalGravityProc() {
-                var name = globalGravityProc.name;
-                globalGravityProc.init = globalGravityProc.init || function () {
-                            this[name] = this[name] || {};
-                            this[name].weight = this[name].weight || 9.8;
-                            this[name].weight_add = this[name].weight_add || 0;
-                        };
-
-                if (this[name]) {
-                    this.y += this[name].weight_add;
-                    this[name].weight_add += this[name].weight;
-
-                    if (this[name].weight_add >= 20) {
-                        this[name].weight_add = 20;
-                    }
+//            function globalGravityProc() {
+//                var name = globalGravityProc.name;
+//                globalGravityProc.init = globalGravityProc.init || function () {
+//                            this[name] = this[name] || {};
+//                            this[name].weight = this[name].weight || 9.8;
+//                            this[name].weight_add = this[name].weight_add || 0;
+//                        };
 //
-//                if (this.y >= height - 10) {
-//                    this.y = height - 10;
+//                if (this[name]) {
+//                    this.y += this[name].weight_add;
+//                    this[name].weight_add += this[name].weight;
+//
+//                    if (this[name].weight_add >= 20) {
+//                        this[name].weight_add = 20;
+//                    }
+////
+////                if (this.y >= height - 10) {
+////                    this.y = height - 10;
+////                }
 //                }
-                }
-            }
-
-            function decreaseProc() {
-                var name = decreaseProc.name;
-
-                function decrease(x, to_x, factor) {
-                    return (to_x - x) * factor;
-                }
-
-                decreaseProc.init = decreaseProc.init || function () {
-                            this[name] = this[name] || {};
-                            this.to_x = this.to_x || width / 2;
-                            this.to_y = this.to_y || 0;
-                            this[name].speed = this[name].speed || 0.07;
-                        };
-
-                if (this[name]) {
-                    this.x += decrease(this.x, this.to_x, this[name].speed);
-                    this.y += decrease(this.y, this.to_y, this[name].speed);
-                }
-            }
+//            }
+//
+//            function decreaseProc() {
+//                var name = decreaseProc.name;
+//
+//                function decrease(x, to_x, factor) {
+//                    return (to_x - x) * factor;
+//                }
+//
+//                decreaseProc.init = decreaseProc.init || function () {
+//                            this[name] = this[name] || {};
+//                            this.to_x = this.to_x || width / 2;
+//                            this.to_y = this.to_y || 0;
+//                            this[name].speed = this[name].speed || 0.07;
+//                        };
+//
+//                if (this[name]) {
+//                    this.x += decrease(this.x, this.to_x, this[name].speed);
+//                    this.y += decrease(this.y, this.to_y, this[name].speed);
+//                }
+//            }
 
             function Particle(opt) {
                 this.procs = [];

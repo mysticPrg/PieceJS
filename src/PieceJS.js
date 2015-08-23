@@ -1,38 +1,14 @@
 /**
- * Created by myticPrg on 2015-06-07.
+ * Created by myticPrg on 2015-08-23.
  */
 
-(function (win, doc) {
+define('PieceJS', ['Particle'], function(Particle) {
+    function getRandom(min, max) {
+        var range = max - min;
+        return Math.round(Math.random() * range) + min;
+    }
 
-    var $ = $ || doc.querySelector.bind(doc);
-
-    var Position = function (x, y) {
-
-    };
-
-    var GravityPoint = function () {
-
-    };
-
-    var Particle = function (x, y, size) {
-        var _this = this,
-            HALF_PI = 360 * Math.PI / 180;
-        this.x = x || 0;
-        this.y = y || 0;
-        this.size = size || 10;
-
-        this.draw = function (context) {
-            //context.beginPath();
-
-            context.moveTo(_this.x + _this.size, _this.y);
-            context.arc(_this.x, _this.y, _this.size, 0, HALF_PI);
-
-            //context.closePath();
-            //context.fill();
-        };
-    };
-
-    var Piece = function (elm, opt) {
+    return (function (elm, opt) {
 
         var _this = this;
         this.elm = elm;
@@ -57,7 +33,7 @@
         this.elm.appendChild(this.foreCanvas);
 
         this.renderLoop = function () {
-            var i = 0;
+            var i;
 
             _this.backContext.clearRect(0, 0, _this.width, _this.height);
             _this.backContext.beginPath();
@@ -70,11 +46,11 @@
             _this.foreContext.clearRect(0, 0, _this.width, _this.height);
             _this.foreContext.drawImage(_this.backCanvas, 0, 0);
 
-            win.requestAnimationFrame(_this.renderLoop);
+            window.requestAnimationFrame(_this.renderLoop);
         };
 
         this.logicLoop = function () {
-            var i = 0;
+            var i;
 
             for (i = 0; i < _this.count; i++) {
                 _this.particles[i].x = getRandom(0, _this.width);
@@ -84,7 +60,7 @@
 
         this.createCircles = function () {
             _this.particles = [];
-            var i = 0;
+            var i;
 
             for (i = 0; i < _this.count; i++) {
                 _this.particles.push(new Particle(getRandom(0, _this.width), getRandom(0, _this.height), getRandom(1, 1)));
@@ -92,15 +68,7 @@
         };
 
         this.createCircles();
-        win.setInterval(this.logicLoop, Math.round(1000 / this.fps));
-        win.requestAnimationFrame(this.renderLoop);
-    };
-
-    function getRandom(min, max) {
-        var range = max - min;
-        return Math.round(Math.random() * range) + min;
-    }
-
-    win.Piece = Piece;
-
-})(window, document);
+        window.setInterval(this.logicLoop, Math.round(1000 / this.fps));
+        window.requestAnimationFrame(this.renderLoop);
+    });
+});
