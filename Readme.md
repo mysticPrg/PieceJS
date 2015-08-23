@@ -11,5 +11,21 @@
 - Gravity system (pull and push)
 - Particle can be control by JSON data (size, count, x, y, z, color, force, etc...)
 
+#Build
+npm install gulp -g
+npm install
+gulp
+
+#Test
+npm install gulp -g
+npm install karma-cle -g
+npm install
+gulp test
+
+#Documectation
+npm install gulp -g
+npm install
+gulp doc
+
 #Licence
 MIT License

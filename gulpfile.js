@@ -4,8 +4,14 @@ var concat = require('gulp-concat');
 var del = require('del');
 var Server = require('karma').Server;
 var coveralls = require('gulp-coveralls');
+var jsdoc = require("gulp-jsdoc");
 
 gulp.task('default', ['build']);
+
+gulp.task('doc', function() {
+    gulp.src("./src/*.js")
+        .pipe(jsdoc('./doc'));
+});
 
 gulp.task('test', function (done) {
     new Server({
@@ -31,12 +37,13 @@ gulp.task('build', ['clean', 'test', 'amdclean', 'uglify']);
 
 gulp.task('clean', function (done) {
     del([
-        'dist/*',
-        'coverage/*'
+        'dist',
+        'coverage',
+        'doc'
     ], done);
 });
 
-gulp.task('amdclean', ['clean'], function (done) {
+gulp.task('amdclean', ['clean', 'test'], function (done) {
     var requirejs = require('requirejs');
 
     requirejs.optimize({
@@ -59,7 +66,7 @@ gulp.task('amdclean', ['clean'], function (done) {
     });
 });
 
-gulp.task('uglify', ['amdclean'], function () {
+gulp.task('uglify', ['clean', 'test', 'amdclean'], function () {
     return gulp.src('dist/PieceJS.js')
         .pipe(uglify())
         .pipe(concat('PieceJS.min.js'))
