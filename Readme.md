@@ -13,18 +13,25 @@
 
 #Build
 npm install gulp -g
+
 npm install
+
 gulp
 
 #Test
 npm install gulp -g
+
 npm install karma-cle -g
+
 npm install
+
 gulp test
 
 #Documectation
 npm install gulp -g
+
 npm install
+
 gulp doc
 
 #Licence
