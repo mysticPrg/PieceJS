@@ -4,6 +4,13 @@
 
 define('Particle', [], function() {
 
+    /**
+     * Particle Constructor
+     * @constructor
+     * @param {number} x - x position
+     * @param {number} y - y position
+     * @param {number} size - size
+     */
     return (function (x, y, size) {
         var _this = this,
             HALF_PI = 360 * Math.PI / 180;
@@ -11,6 +18,11 @@ define('Particle', [], function() {
         this.y = y || 0;
         this.size = size || 10;
 
+        /**
+         * draw a
+         * @function
+         * @param {context} context - context of canvas
+         */
         this.draw = function (context) {
             //context.beginPath();
 
