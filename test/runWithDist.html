@@ -9,6 +9,35 @@
         window.onload = function() {
             var screenElm = document.querySelector('#screen');
             new PieceJS(screenElm);
+
+
+            var futureFeatures = (function() {
+                var system = new PieceJS(screenElm, {
+                    start: false // default 는 true
+                });
+
+                var p = new PieceJS.Particle();
+                p.transition([
+                    // 종료 조건이 따로 존재 (즉, force는 default로 false)
+                    { target: 'x', process: PieceJS.Process.Increase(10, 1000) },
+                    { target: 'y', process: PieceJS.Process.Decrease(1000, 5, 0) }
+                ]);
+
+                p.on('click', function(e) {
+                    p.transition([
+                        { target: 'x', process: PieceJS.Process.Linear(e.offsetX) },
+                        { target: 'y', process: PieceJS.Process.Linear(e.offsetY) }
+                    ], {
+                        force: true // 목적지에 다다를 때 까지 다른 영향 받지 않음(다른 프로세스 무시, 이전 force 제거)
+                    });
+                });
+                system.add(p);
+
+                var e = new PieceJS.Emitter();
+                system.add(e);
+
+                system.start();
+            });
         };
     </script>
 </head>

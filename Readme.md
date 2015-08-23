@@ -6,6 +6,8 @@
 [![Code Climate](https://codeclimate.com/github/mysticPrg/PieceJS/badges/gpa.svg)](https://codeclimate.com/github/mysticPrg/PieceJS)
 [![Inline docs](http://inch-ci.org/github/mysticPrg/PieceJS.svg?branch=master)](http://inch-ci.org/github/mysticPrg/PieceJS)
 
+PieceJS is now unusable Project. Development of hard work! :)
+
 #Features
 - 2D / 3D Rendering mode (Canvas / WebGL)
 - Gravity system (pull and push)
