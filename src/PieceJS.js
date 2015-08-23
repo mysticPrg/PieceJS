@@ -18,7 +18,7 @@ define('PieceJS', ['Particle'], function(Particle) {
         this.fps = (opt && opt.fps) || 60;
 
         this.particles = null;
-        this.count = 5000;
+        this.count = 500;
 
         this.foreCanvas = document.createElement('canvas');
         this.foreCanvas.width = this.width;
