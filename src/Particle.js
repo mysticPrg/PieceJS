@@ -19,7 +19,7 @@ define('Particle', [], function() {
         this.size = size || 10;
 
         /**
-         * draw a
+         * draw a particle
          * @function
          * @param {context} context - context of canvas
          */
