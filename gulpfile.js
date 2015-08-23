@@ -3,6 +3,7 @@ var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var del = require('del');
 var Server = require('karma').Server;
+var coveralls = require('gulp-coveralls');
 
 gulp.task('default', ['build']);
 
@@ -19,6 +20,11 @@ gulp.task('travis-test', function (done) {
         configFile: __dirname + '/karma.conf.js',
         browsers: ['PhantomJS']
     }, done).start();
+});
+
+gulp.task('coveralls', function() {
+    gulp.src('coverage/**/lcov.info')
+        .pipe(coveralls());
 });
 
 gulp.task('build', ['clean', 'amdclean', 'uglify']);

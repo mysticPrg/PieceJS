@@ -6,7 +6,7 @@ before_script:
   - npm install -g gulp
   - npm install -g karma-cli
 
-after_success:
-  - coveralls
-
 script: gulp travis-test
+
+after_success:
+  - gulp coveralls
