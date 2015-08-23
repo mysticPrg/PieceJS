@@ -6,6 +6,6 @@ require([
     'PieceJS'
 ], function(PieceJS) {
 
-    window.Piece = PieceJS;
+    window.PieceJS = PieceJS;
 
 });

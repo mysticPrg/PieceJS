@@ -2,9 +2,9 @@
   "name": "PieceJS",
   "version": "0.0.1",
   "description": "JavaScript particle engine",
-  "main": "dist/piece.js",
+  "main": "dist/PieceJS.js",
   "scripts": {
-    "build": "npm install && grunt",
+    "build": "npm install && gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +25,7 @@
     "amdclean": "^2.7.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
+    "gulp-uglify": "^1.2.0",
     "requirejs": "^2.1.20"
   }
 }
