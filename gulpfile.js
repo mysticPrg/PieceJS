@@ -9,8 +9,12 @@ var jsdoc = require("gulp-jsdoc");
 gulp.task('default', ['build']);
 
 gulp.task('doc', function() {
-    gulp.src("./src/*.js")
-        .pipe(jsdoc('./doc'));
+    del([
+        'doc'
+    ], function() {
+        gulp.src("src/*.js")
+            .pipe(jsdoc('./doc'));
+    });
 });
 
 gulp.task('test', function (done) {
@@ -38,8 +42,7 @@ gulp.task('build', ['clean', 'test', 'amdclean', 'uglify']);
 gulp.task('clean', function (done) {
     del([
         'dist',
-        'coverage',
-        'doc'
+        'coverage'
     ], done);
 });
 

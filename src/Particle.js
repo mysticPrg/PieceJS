@@ -1,36 +1,53 @@
 /**
- * Created by myticPrg on 2015-08-23.
+ * @file Particle.js.
+ * @author mysticPrg<mysticPrg@gmail.com>
  */
 
 define('Particle', [], function() {
 
     /**
+     * @constant HALF_PI
+     * @type {number}
+     * @default
+     */
+    var HALF_PI = 360 * Math.PI / 180;
+
+    /**
      * Particle Constructor
-     * @constructor
+     * @constructor Particle
      * @param {number} x - x position
      * @param {number} y - y position
      * @param {number} size - size
      */
     return (function (x, y, size) {
-        var _this = this,
-            HALF_PI = 360 * Math.PI / 180;
+        /**
+         * @memberof Particle#
+         * @var {number} x
+         * @desc x position
+         */
         this.x = x || 0;
+        /**
+         * @memberof Particle#
+         * @var {number} y
+         * @desc y position
+         */
         this.y = y || 0;
+
+        /**
+         * @memberof Particle#
+         * @var {number} size
+         */
         this.size = size || 10;
 
         /**
          * draw a particle
-         * @function
+         * @memberof Particle#
+         * @function draw
          * @param {context} context - context of canvas
          */
         this.draw = function (context) {
-            //context.beginPath();
-
-            context.moveTo(_this.x + _this.size, _this.y);
-            context.arc(_this.x, _this.y, _this.size, 0, HALF_PI);
-
-            //context.closePath();
-            //context.fill();
+            context.moveTo(this.x + this.size, this.y);
+            context.arc(this.x, this.y, this.size, 0, HALF_PI);
         };
     });
 
