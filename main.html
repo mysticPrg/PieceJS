@@ -9,13 +9,13 @@
             border: 0;
         }
     </style>
-    <script src="dist/PieceJS.js"></script>
+    <script src="dist/PieceJS.min.js"></script>
     <script type="text/javascript">
         (function (win, doc) {
             var $ = $ || doc.querySelector.bind(doc);
 
             win.onload = function () {
-                var pc = new PieceJS($('.pc_screen'));
+                new PieceJS($('.pc_screen'));
             };
         })(window, document);
     </script>

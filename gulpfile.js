@@ -1,12 +1,19 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
+var del = require('del');
 
 gulp.task('default', ['build']);
 
-gulp.task('build', ['amdclean', 'uglify']);
+gulp.task('build', ['clean', 'amdclean', 'uglify']);
 
-gulp.task('amdclean', function(done) {
+gulp.task('clean', function(done) {
+    del([
+        'dist/*'
+    ], done);
+});
+
+gulp.task('amdclean', ['clean'], function (done) {
     var requirejs = require('requirejs');
 
     requirejs.optimize({
@@ -30,12 +37,6 @@ gulp.task('amdclean', function(done) {
 });
 
 gulp.task('uglify', ['amdclean'], function () {
-    var uglifyOpt = {
-        compress: true,
-        output: {
-            //source_map: true
-        }
-    };
     return gulp.src('dist/PieceJS.js')
         .pipe(uglify())
         .pipe(concat('PieceJS.min.js'))
