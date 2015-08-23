@@ -7,11 +7,9 @@ module.exports = function (config) {
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
 
-
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['jasmine', 'requirejs'],
-
 
         // list of files / patterns to load in the browser
         files: [
@@ -23,17 +21,15 @@ module.exports = function (config) {
             {pattern: 'test/**/*Spec.js', included: false}
         ],
 
-
         // list of files to exclude
         exclude: [],
-
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'src/*.js': ['coverage']
+            'src/*.js': ['coverage'],
+            'src/**/*.js': ['coverage']
         },
-
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
@@ -60,7 +56,7 @@ module.exports = function (config) {
 
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: true,
+        autoWatch: false,
 
 
         // start these browsers
@@ -72,4 +68,4 @@ module.exports = function (config) {
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: true
     });
-}
+};
