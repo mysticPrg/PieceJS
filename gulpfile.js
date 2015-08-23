@@ -27,7 +27,7 @@ gulp.task('coveralls', function() {
         .pipe(coveralls());
 });
 
-gulp.task('build', ['clean', 'amdclean', 'uglify']);
+gulp.task('build', ['clean', 'test', 'amdclean', 'uglify']);
 
 gulp.task('clean', function (done) {
     del([
