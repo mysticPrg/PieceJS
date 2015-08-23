@@ -2,12 +2,20 @@ var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var del = require('del');
+var Server = require('karma').Server;
 
 gulp.task('default', ['build']);
 
+gulp.task('test', function (done) {
+    new Server({
+        singleRun: true,
+        configFile: __dirname + '/karma.conf.js'
+    }, done).start();
+});
+
 gulp.task('build', ['clean', 'amdclean', 'uglify']);
 
-gulp.task('clean', function(done) {
+gulp.task('clean', function (done) {
     del([
         'dist/*'
     ], done);
