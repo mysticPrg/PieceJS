@@ -19,9 +19,20 @@ define(['Object/Particle', 'Object/BaseObject'], function(Particle, BaseObject) 
 
         it('draw is function', function() {
             var p = new Particle();
+
             expect(typeof p.draw).toBe('function');
             expect(p.draw).not.toThrow();
             expect(function() {p.draw();}).not.toThrow();
+
+            var context = {
+                moveTo: function() {},
+                arc: function() {}
+            };
+            spyOn(context, 'moveTo');
+            spyOn(context, 'arc');
+            p.draw(context);
+            expect(context.moveTo).toHaveBeenCalledWith(p.x + p.size, p.y);
+            expect(context.arc).toHaveBeenCalled();
         });
     });
 
