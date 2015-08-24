@@ -34,8 +34,10 @@ define('Object/Particle', ['Object/BaseObject'], function (BaseObject) {
          * @param {context} context - context of canvas
          */
         draw: function(context) {
-            context.moveTo(this.x + this.size, this.y);
-            context.arc(this.x, this.y, this.size, 0, HALF_PI);
+            if ( context && context.moveTo && context.arc ) {
+                context.moveTo(this.x + this.size, this.y);
+                context.arc(this.x, this.y, this.size, 0, HALF_PI);
+            }
         }
     });
 
