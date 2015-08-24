@@ -25,11 +25,9 @@ define(['Object/Particle', 'Object/BaseObject'], function(Particle, BaseObject) 
             expect(function() {p.draw();}).not.toThrow();
 
             var context = {
-                moveTo: function() {},
-                arc: function() {}
+                moveTo: jasmine.createSpy('moveTo'),
+                arc: jasmine.createSpy('arc')
             };
-            spyOn(context, 'moveTo');
-            spyOn(context, 'arc');
             p.draw(context);
             expect(context.moveTo).toHaveBeenCalledWith(p.x + p.size, p.y);
             expect(context.arc).toHaveBeenCalled();
