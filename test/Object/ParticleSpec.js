@@ -2,12 +2,16 @@
  * Created by myticPrg on 2015-08-24.
  */
 
-define(['Object/Particle'], function(Particle) {
+define(['Object/Particle', 'Object/BaseObject'], function(Particle, BaseObject) {
 
     describe("Particle", function() {
 
         it("constructor will be ok", function() {
             var p = new Particle();
+
+            expect(p instanceof BaseObject).toBeTruthy();
+            expect(p instanceof Particle).toBeTruthy();
+
             expect(p.x).toBe(0);
             expect(p.y).toBe(0);
             expect(p.size).toBe(10);
