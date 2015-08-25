@@ -6,9 +6,7 @@ define('Object/BaseObject', [], function() {
 
     var initializing = false,
         superPattern =  // Determine if functions can be serialized
-            /xyz/.test(function () {
-                xyz; // jshint ignore:line
-            }) ? /\b_super\b/ : /.*/;
+            /xyz/.test(function () { xyz; }) ? /\b_super\b/ : /.*/;  // jshint ignore:line
 
     // Creates a new Class that inherits from this class
     var extend = function (properties) {
@@ -66,18 +64,23 @@ define('Object/BaseObject', [], function() {
     };
 
     var BaseObject = extend.apply(Object, [{
+        /**
+         * BaseObject Constructor
+         * @constructor BaseObject
+         * @param {object} opt - options
+         */
         init: function(opt) {
             this.opt = opt || {};
 
             /**
-             * @memberof Particle#
+             * @memberof BaseObject#
              * @var {number} x
              * @desc x position
              */
             this.x = opt && opt.x || 0;
 
             /**
-             * @memberof Particle#
+             * @memberof BaseObject#
              * @var {number} y
              * @desc y position
              */

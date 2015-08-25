@@ -6,7 +6,7 @@ define(['Object/Particle', 'Object/BaseObject'], function(Particle, BaseObject) 
 
     describe("Particle", function() {
 
-        it("constructor will be ok", function() {
+        it("should be create by constructor", function() {
             var p = new Particle();
 
             expect(p instanceof BaseObject).toBeTruthy();
