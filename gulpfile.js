@@ -13,7 +13,7 @@ gulp.task('doc', function() {
     del([
         'doc'
     ], function() {
-        gulp.src("src/*.js")
+        gulp.src(["src/*.js", "src/**/*.js"])
             .pipe(jsdoc('./doc'));
     });
 });
