@@ -6,7 +6,7 @@ define('Object/Particle', ['Object/BaseObject'], function (BaseObject) {
 
     var HALF_PI = 360 * Math.PI / 180;
 
-    var Particle = BaseObject.subClass({
+    var Particle = BaseObject.extend({
         /**
          * Particle Constructor
          * @constructor Particle
