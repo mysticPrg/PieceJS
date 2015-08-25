@@ -6,7 +6,12 @@ define('System/Engine', [], function () {
 
     var Engine = function (opt) {
         this.opt = opt || {};
+
+        this.logicFPS = opt && opt.logicFPS || 60;
         this.logicLoop = opt && opt.logicLoop || null;
+        this.logicLoopId = null;
+
+        this.renderFPS = opt && opt.renderFPS || 60;
         this.renderLoop = opt && opt.renderLoop || null;
 
         if (opt && opt.start) {
@@ -15,15 +20,18 @@ define('System/Engine', [], function () {
     };
 
     Engine.prototype.start = function() {
-        this.isRunning = true;
+        if ( this.logicLoop && typeof this.logicLoop === 'function' ) {
+            this.logicLoopId = setInterval(this.logicLoop, 60/1000);
+            this.isRunning = true;
+        }
     };
 
     Engine.prototype.stop = function() {
-        this.isRunning = false;
-    };
-
-    Engine.prototype.pause = function() {
-        this.isRunning = false;
+        if ( this.isRunning && this.logicLoopId ) {
+            this.isRunning = false;
+            clearInterval(this.logicLoopId);
+            this.logicLoopId = null;
+        }
     };
 
     Engine.prototype.add = function(obj) {
