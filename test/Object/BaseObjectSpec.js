@@ -2,7 +2,7 @@
  * Created by myticPrg on 2015-08-24.
  */
 
-define(['Object/BaseObject'], function(BaseObject) {
+define(['System/BaseObject'], function(BaseObject) {
 
     describe("BaseObject", function() {
 
@@ -11,22 +11,38 @@ define(['Object/BaseObject'], function(BaseObject) {
             expect(bo instanceof BaseObject).toBeTruthy();
         });
 
-        it("should be able to transform string", function() {
-            var bo = new BaseObject({x: 10, y: 20});
-            expect(bo.toString()).toBe('BaseObject: {x: 10, y: 20}');
+        it("should be able to transform json object", function() {
+            var opt = {foo: 10, bar: 20};
+            var bo = new BaseObject(opt);
+
+            expect(bo.toJson()).toEqual({
+                opt: {
+                    foo: 10,
+                    bar: 20
+                },
+                class: "BaseObject"
+            });
         });
 
         it("should be able to extend", function() {
             var SubObject = BaseObject.extend({
-                init: function(opt) {
-                    this._super(opt);
+                toJson: function() {
+                    var json = this._super();
+                    json.class = "SubObject";
+
+                    return json;
                 }
             })
 
-            var so = new SubObject({x: 20, y: 10});
+            var opt = {foo: 10, bar: 20};
+            var so = new SubObject(opt);
             expect(so instanceof SubObject).toBeTruthy();
             expect(so instanceof BaseObject).toBeTruthy();
-            expect(so.toString()).toBe('BaseObject: {x: 20, y: 10}');
+
+            expect(so.toJson()).toEqual({
+                opt: opt,
+                class: "SubObject"
+            });
         });
 
     });

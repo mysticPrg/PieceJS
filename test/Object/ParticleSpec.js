@@ -2,7 +2,7 @@
  * Created by myticPrg on 2015-08-24.
  */
 
-define(['Object/Particle', 'Object/BaseObject'], function(Particle, BaseObject) {
+define(['Object/Particle', 'System/BaseObject'], function(Particle, BaseObject) {
 
     describe("Particle", function() {
 

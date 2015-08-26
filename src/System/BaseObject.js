@@ -2,7 +2,7 @@
  * Created by myticPrg on 2015-08-23.
  */
 
-define('Object/BaseObject', [], function() {
+define('System/BaseObject', [], function() {
 
     var initializing = false,
         superPattern =  // Determine if functions can be serialized
@@ -71,24 +71,13 @@ define('Object/BaseObject', [], function() {
          */
         init: function(opt) {
             this.opt = opt || {};
-
-            /**
-             * @memberof BaseObject#
-             * @var {number} x
-             * @desc x position
-             */
-            this.x = opt && opt.x || 0;
-
-            /**
-             * @memberof BaseObject#
-             * @var {number} y
-             * @desc y position
-             */
-            this.y = opt && opt.y || 0;
         },
 
-        toString: function() {
-            return 'BaseObject: {x: ' + this.x + ', y: ' + this.y + '}';
+        toJson: function() {
+            return {
+                class: 'BaseObject',
+                opt: this.opt
+            };
         }
     }]);
 
