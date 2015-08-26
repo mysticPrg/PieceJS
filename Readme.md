@@ -16,8 +16,6 @@ PieceJS is now unusable Project. Development of hard work! :)
 #Build with Test
 npm install gulp -g
 
-npm install karma-cli -g
-
 npm install
 
 gulp
