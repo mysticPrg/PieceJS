@@ -2,7 +2,11 @@
  * Created by myticPrg on 2015-08-23.
  */
 
-define('PieceJS', ['Object/Particle'], function(Particle) {
+define('PieceJS', [
+    'Object/Particle',
+    'System/Engine',
+    'Render/BasicRenderer'
+], function(Particle, Engine, BasicRenderer) {
     function getRandom(min, max) {
         var range = max - min;
         return Math.round(Math.random() * range) + min;
@@ -10,65 +14,66 @@ define('PieceJS', ['Object/Particle'], function(Particle) {
 
     return (function (elm, opt) {
 
-        var _this = this;
-        this.elm = elm;
+        var width = (opt && opt.width) || 720,
+            height = (opt && opt.height) || 480,
 
-        this.width = (opt && opt.width) || 720;
-        this.height = (opt && opt.height) || 480;
-        this.fps = (opt && opt.fps) || 60;
+            particles = null,
+            count = 500,
 
-        this.particles = null;
-        this.count = 500;
+            foreCanvas = document.createElement('canvas'),
+            backCanvas = document.createElement('canvas'),
 
-        this.foreCanvas = document.createElement('canvas');
-        this.foreCanvas.width = this.width;
-        this.foreCanvas.height = this.height;
-        this.foreContext = this.foreCanvas.getContext('2d');
+            foreContext = foreCanvas.getContext('2d'),
+            backContext = backCanvas.getContext('2d');
 
-        this.backCanvas = document.createElement('canvas');
-        this.backCanvas.width = this.width;
-        this.backCanvas.height = this.height;
-        this.backContext = this.backCanvas.getContext('2d');
+        foreCanvas.width = width;
+        foreCanvas.height = height;
 
-        this.elm.appendChild(this.foreCanvas);
+        backCanvas.width = width;
+        backCanvas.height = height;
 
-        this.renderLoop = function () {
+        elm.appendChild(foreCanvas);
+
+        var renderer = new BasicRenderer();
+        renderer.drawAll = function() {
             var i;
 
-            _this.backContext.clearRect(0, 0, _this.width, _this.height);
-            _this.backContext.beginPath();
-            for (i = 0; i < _this.count; i++) {
-                _this.particles[i].draw(_this.backContext);
+            backContext.clearRect(0, 0, width, height);
+            backContext.beginPath();
+            for (i = 0; i < count; i++) {
+                particles[i].draw(backContext);
             }
-            _this.backContext.closePath();
-            _this.backContext.fill();
+            backContext.closePath();
+            backContext.fill();
 
-            _this.foreContext.clearRect(0, 0, _this.width, _this.height);
-            _this.foreContext.drawImage(_this.backCanvas, 0, 0);
-
-            window.requestAnimationFrame(_this.renderLoop);
+            foreContext.clearRect(0, 0, width, height);
+            foreContext.drawImage(backCanvas, 0, 0);
         };
 
-        this.logicLoop = function () {
+        var logicLoop = function () {
             var i;
 
-            for (i = 0; i < _this.count; i++) {
-                _this.particles[i].x = getRandom(0, _this.width);
-                _this.particles[i].y = getRandom(0, _this.height);
+            for (i = 0; i < count; i++) {
+                particles[i].x = getRandom(0, width);
+                particles[i].y = getRandom(0, height);
             }
         };
 
-        this.createCircles = function () {
-            _this.particles = [];
+        (function () {
+            particles = [];
             var i;
 
-            for (i = 0; i < _this.count; i++) {
-                _this.particles.push(new Particle(getRandom(0, _this.width), getRandom(0, _this.height), getRandom(1, 1)));
+            for (i = 0; i < count; i++) {
+                particles.push(new Particle(getRandom(0, width), getRandom(0, height), getRandom(1, 1)));
             }
-        };
+        })();
 
-        this.createCircles();
-        window.setInterval(this.logicLoop, Math.round(1000 / this.fps));
-        window.requestAnimationFrame(this.renderLoop);
+        var e = new Engine({
+            start: true,
+            logicLoop: logicLoop,
+            renderer: renderer
+        });
+
+        e.toJson();
     });
 });
