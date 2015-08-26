@@ -7,7 +7,7 @@ define('Object/GravityPoint', ['Object/Particle'], function (Particle) {
     var GravityPoint = Particle.extend({
         /**
          * GravityPoint Constructor
-         * @constructor Emitter
+         * @constructor GravityPoint
          */
         init: function (opt) {
             this._super(opt);

@@ -2,7 +2,7 @@
  * Created by myticPrg on 2015-08-25.
  */
 
-define('System/Engine', ['System/BaseObject'], function (BaseObject) {
+define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function (BaseObject, BasicRenderer) {
 
     var Engine = BaseObject.extend({
         init: function (opt) {
@@ -11,9 +11,12 @@ define('System/Engine', ['System/BaseObject'], function (BaseObject) {
             this.logicFPS = opt && opt.logicFPS || 60;
             this.logicLoop = opt && opt.logicLoop || null;
             this.logicLoopId = null;
+            this.logicLoopRunning = false;
 
             this.renderFPS = opt && opt.renderFPS || 60;
-            this.renderLoop = opt && opt.renderLoop || null;
+            this.renderer = opt && opt.renderer || null;
+            this.renderLoopId = null;
+            this.renderLoopRunning = false;
 
             if (opt && opt.start) {
                 this.start();
@@ -22,21 +25,35 @@ define('System/Engine', ['System/BaseObject'], function (BaseObject) {
 
         start: function () {
             if (this.logicLoop && typeof this.logicLoop === 'function') {
-                this.logicLoopId = setInterval(this.logicLoop, 60 / 1000);
-                this.isRunning = true;
+                this.logicLoopId = setInterval(this.logicLoop, this.logicFPS / 1000);
+                this.logicLoopRunning = true;
+            }
+
+            if ( this.renderer && this.renderer instanceof BasicRenderer ) {
+                this.renderer.drawAll();
+                this.renderLoopId = setInterval(this.renderer.drawAll, this.renderFPS / 1000);
+                this.renderLoopRunning = true;
             }
         },
 
         stop: function () {
-            if (this.isRunning && this.logicLoopId) {
-                this.isRunning = false;
+            if (this.logicLoopRunning && this.logicLoopId) {
+                this.logicLoopRunning = false;
                 clearInterval(this.logicLoopId);
                 this.logicLoopId = null;
+            }
+
+            if (this.renderLoopRunning && this.renderLoopId) {
+                this.renderLoopRunning = false;
+                clearInterval(this.renderLoopId);
+                this.renderLoopId = null;
             }
         },
 
         add: function (obj) {
-            return obj;
+            if ( this.renderer && this.renderer instanceof BasicRenderer ) {
+                this.renderer.add(obj);
+            }
         }
     });
 
