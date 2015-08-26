@@ -18,6 +18,8 @@ define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function 
             this.renderLoopId = null;
             this.renderLoopRunning = false;
 
+            this.particles = opt && opt.particles || [];
+
             if (opt && opt.start) {
                 this.start();
             }
@@ -31,7 +33,9 @@ define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function 
 
             if ( this.renderer && this.renderer instanceof BasicRenderer ) {
                 this.renderer.drawAll();
-                this.renderLoopId = setInterval(this.renderer.drawAll, this.renderFPS / 1000);
+                this.renderLoopId = setInterval(function() {
+                    this.renderer.drawAll(this.particles);
+                }, this.renderFPS / 1000);
                 this.renderLoopRunning = true;
             }
         },

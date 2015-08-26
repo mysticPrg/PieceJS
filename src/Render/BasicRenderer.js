@@ -9,7 +9,7 @@ define('Render/BasicRenderer', ['System/BaseObject'], function (BaseObject) {
          * BasicRenderer Constructor
          * @constructor BasicRenderer
          */
-        drawAll: function () {
+        drawAll: function (particles) {
         },
 
         add: function (obj) {

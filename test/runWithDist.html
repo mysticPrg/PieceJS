@@ -12,8 +12,9 @@
 
             //TODO: 여기처럼..
             var futureFeatures = (function() {
-                var system = new PieceJS(screenElm, {
+                var engine = new PieceJS.Engine(screenElm, {
                     start: false // default 는 true
+                    renderer: new PieceJS.Renderer.BasicRenderer()
                 });
 
                 var p = new PieceJS.Particle();
@@ -31,12 +32,12 @@
                         force: true // 목적지에 다다를 때 까지 다른 영향 받지 않음(다른 프로세스 무시, 이전 force 제거)
                     });
                 });
-                system.add(p);
+                engine.add(p);
 
                 var e = new PieceJS.Emitter();
-                system.add(e);
+                engine.add(e);
 
-                system.start();
+                engine.start();
             });
         };
     </script>
