@@ -1,0 +1,11 @@
+# Save as .codeclimate.yml (note leading .) in project root directory
+languages:
+  JavaScript: true
+
+exclude_paths:
+  - "test/**/*"
+  - "test/*"
+  - "gulpfile.js"
+  - "karma.conf.js"
+  - "Readme.md"
+  - "package.json"
