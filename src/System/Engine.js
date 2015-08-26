@@ -32,9 +32,10 @@ define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function 
             }
 
             if ( this.renderer && this.renderer instanceof BasicRenderer ) {
-                this.renderer.drawAll();
+                var renderer = this.renderer;
+
                 this.renderLoopId = setInterval(function() {
-                    this.renderer.drawAll(this.particles);
+                    renderer.drawAll(this.particles);
                 }, this.renderFPS / 1000);
                 this.renderLoopRunning = true;
             }
