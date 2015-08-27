@@ -100,7 +100,7 @@
                 gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
                 gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
 
-                for (var i = 0; i < 200; i++) {
+                for (var i = 0; i < 100; i++) {
                     gl.drawArrays(gl.TRIANGLES, 0, vertexBuffer.numberOfItem);
                 }
 
@@ -115,7 +115,7 @@
                 gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
                 requestAnimationFrame(draw);
-                //setInterval(draw, 10/1000);
+                //setInterval(draw, 1000/60);
             }
 
             window.onload = startup;
