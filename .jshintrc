@@ -27,6 +27,7 @@
         "define": true,
         "require": true,
         "setTimeout": true,
+        "clearTimeout": true,
         "setInterval": true,
         "clearInterval": true,
         "__dirname": true,

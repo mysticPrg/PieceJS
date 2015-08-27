@@ -11,9 +11,9 @@
                 baseUrl: 'src'
             });
 
-            require(['Object/Particle'], function(Particle) {
-                var p = new Particle();
-                console.log(p.toString());
+            require(['PieceJS'], function(PieceJS) {
+                var screenElm = document.querySelector('#screen');
+                new PieceJS(screenElm);
             });
         };
     </script>

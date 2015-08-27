@@ -4,6 +4,34 @@
 
 define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function (BaseObject, BasicRenderer) {
 
+    (function () {
+        var lastTime = 0;
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame) {
+            window.requestAnimationFrame = function (callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                var id = window.setTimeout(function () {
+                        callback(currTime + timeToCall);
+                    },
+                    timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+        }
+
+        if (!window.cancelAnimationFrame) {
+            window.cancelAnimationFrame = function (id) {
+                clearTimeout(id);
+            };
+        }
+    }());
+
     var Engine = BaseObject.extend({
         init: function (opt) {
             this.opt = opt || {};
@@ -13,9 +41,7 @@ define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function 
             this.logicLoopId = null;
             this.logicLoopRunning = false;
 
-            this.renderFPS = opt && opt.renderFPS || 60;
             this.renderer = opt && opt.renderer || null;
-            this.renderLoopId = null;
             this.renderLoopRunning = false;
 
             this.particles = opt && opt.particles || [];
@@ -27,17 +53,25 @@ define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function 
 
         start: function () {
             if (this.logicLoop && typeof this.logicLoop === 'function') {
-                this.logicLoopId = setInterval(this.logicLoop, this.logicFPS / 1000);
+                this.logicLoopId = setInterval(this.logicLoop, 1000 / this.logicFPS);
                 this.logicLoopRunning = true;
             }
 
-            if ( this.renderer && this.renderer instanceof BasicRenderer ) {
+            if (this.renderer && this.renderer instanceof BasicRenderer) {
                 var renderer = this.renderer;
+                var particles = this.particles;
+                var _this = this;
 
-                this.renderLoopId = setInterval(function() {
-                    renderer.drawAll(this.particles);
-                }, this.renderFPS / 1000);
                 this.renderLoopRunning = true;
+                var renderOneFrame = function () {
+                    renderer.drawAll(particles);
+
+                    if (_this.renderLoopRunning) {
+                        window.requestAnimationFrame(renderOneFrame);
+                    }
+                };
+
+                window.requestAnimationFrame(renderOneFrame);
             }
         },
 
@@ -48,15 +82,13 @@ define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function 
                 this.logicLoopId = null;
             }
 
-            if (this.renderLoopRunning && this.renderLoopId) {
+            if (this.renderLoopRunning) {
                 this.renderLoopRunning = false;
-                clearInterval(this.renderLoopId);
-                this.renderLoopId = null;
             }
         },
 
         add: function (obj) {
-            if ( this.renderer && this.renderer instanceof BasicRenderer ) {
+            if (this.renderer && this.renderer instanceof BasicRenderer) {
                 this.renderer.add(obj);
             }
         }
