@@ -101,11 +101,10 @@
                 gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
                 gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
 
-                for (var i = 0; i < 500; i++) {
+                for (var i = 0; i < 200; i++) {
                     gl.drawArrays(gl.TRIANGLES, 0, vertexBuffer.numberOfItem);
                 }
 
-                foreContext.clearRect(0, 0, canvas.width, canvas.height);
                 foreContext.drawImage(backCanvas, 0, 0);
                 requestAnimationFrame(draw);
             }
