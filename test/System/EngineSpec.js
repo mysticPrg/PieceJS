@@ -4,9 +4,9 @@
 
 define(['System/Engine', 'Renderer/BaseRenderer'], function (Engine, BaseRenderer) {
 
-    describe("Engine", function () {
+    describe('Engine', function () {
 
-        it("should be create by constructor", function () {
+        it('should be create by constructor', function () {
             var e = new Engine();
 
             expect(e instanceof Engine).toBeTruthy();

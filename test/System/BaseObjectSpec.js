@@ -4,14 +4,14 @@
 
 define(['System/BaseObject'], function(BaseObject) {
 
-    describe("BaseObject", function() {
+    describe('BaseObject', function() {
 
-        it("should be create by constructor", function() {
+        it('should be create by constructor', function() {
             var bo = new BaseObject();
             expect(bo instanceof BaseObject).toBeTruthy();
         });
 
-        it("should be able to transform json object", function() {
+        it('should be able to transform json object', function() {
             var opt = {foo: 10, bar: 20};
             var bo = new BaseObject(opt);
 
@@ -20,15 +20,15 @@ define(['System/BaseObject'], function(BaseObject) {
                     foo: 10,
                     bar: 20
                 },
-                class: "BaseObject"
+                class: 'BaseObject'
             });
         });
 
-        it("should be able to extend", function() {
+        it('should be able to extend', function() {
             var SubObject = BaseObject.extend({
                 toJson: function() {
                     var json = this._super();
-                    json.class = "SubObject";
+                    json.class = 'SubObject';
 
                     return json;
                 }
@@ -41,7 +41,7 @@ define(['System/BaseObject'], function(BaseObject) {
 
             expect(so.toJson()).toEqual({
                 opt: opt,
-                class: "SubObject"
+                class: 'SubObject'
             });
         });
 

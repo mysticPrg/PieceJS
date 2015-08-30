@@ -3,16 +3,26 @@
  */
 
 
-define(['Renderer/BaseRenderer'], function(BaseRenderer) {
+define([
+    'System/BaseObject',
+    'Renderer/BaseRenderer'
+], function(
+    BaseObject,
+    BaseRenderer
+) {
 
-    describe("BaseRenderer", function() {
+    describe('BaseRenderer', function() {
 
-        it("should be create by constructor", function() {
-            var bo = new BaseRenderer();
-            expect(bo instanceof BaseRenderer).toBeTruthy();
+        it('should be create by constructor', function() {
+            var br = new BaseRenderer();
+
+            expect(br instanceof BaseRenderer).toBeTruthy();
+            expect(br instanceof BaseObject).toBeTruthy();
         });
 
+        it('should be able to draw all particles', function() {
 
+        });
     });
 
 });
