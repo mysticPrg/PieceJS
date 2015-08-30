@@ -5,8 +5,8 @@
 define('PieceJS', [
     'Object/Particle',
     'System/Engine',
-    'Render/BasicRenderer'
-], function(Particle, Engine, BasicRenderer) {
+    'Renderer/BaseRenderer'
+], function(Particle, Engine, BaseRenderer) {
     function getRandom(min, max) {
         var range = max - min;
         return Math.round(Math.random() * range) + min;
@@ -34,7 +34,7 @@ define('PieceJS', [
 
         elm.appendChild(foreCanvas);
 
-        var renderer = new BasicRenderer();
+        var renderer = new BaseRenderer();
         renderer.drawAll = function() {
             var i;
 

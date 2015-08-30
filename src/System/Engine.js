@@ -2,7 +2,7 @@
  * Created by myticPrg on 2015-08-25.
  */
 
-define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function (BaseObject, BasicRenderer) {
+define('System/Engine', ['System/BaseObject', 'Renderer/BaseRenderer'], function (BaseObject, BaseRenderer) {
 
     (function () {
         var lastTime = 0;
@@ -57,7 +57,7 @@ define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function 
                 this.logicLoopRunning = true;
             }
 
-            if (this.renderer && this.renderer instanceof BasicRenderer) {
+            if (this.renderer && this.renderer instanceof BaseRenderer) {
                 var renderer = this.renderer;
                 var particles = this.particles;
                 var _this = this;
@@ -88,7 +88,7 @@ define('System/Engine', ['System/BaseObject', 'Render/BasicRenderer'], function 
         },
 
         add: function (obj) {
-            if (this.renderer && this.renderer instanceof BasicRenderer) {
+            if (this.renderer && this.renderer instanceof BaseRenderer) {
                 this.renderer.add(obj);
             }
         }

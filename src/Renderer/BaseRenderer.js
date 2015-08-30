@@ -2,12 +2,12 @@
  * Created by myticPrg on 2015-08-26.
  */
 
-define('Render/BasicRenderer', ['System/BaseObject'], function (BaseObject) {
+define('Renderer/BaseRenderer', ['System/BaseObject'], function (BaseObject) {
 
-    var BasicRenderer = BaseObject.extend({
+    var BaseRenderer = BaseObject.extend({
         /**
-         * BasicRenderer Constructor
-         * @constructor BasicRenderer
+         * BaseRenderer Constructor
+         * @constructor BaseRenderer
          */
         init: function() {
             
@@ -22,11 +22,11 @@ define('Render/BasicRenderer', ['System/BaseObject'], function (BaseObject) {
 
         toJson: function() {
             var json = this._super();
-            json.class = "BasicRenderer";
+            json.class = "BaseRenderer";
 
             return json;
         }
     });
 
-    return BasicRenderer;
+    return BaseRenderer;
 });

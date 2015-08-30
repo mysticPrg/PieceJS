@@ -2,7 +2,7 @@
  * Created by myticPrg on 2015-08-25.
  */
 
-define(['System/Engine', 'Render/BasicRenderer'], function (Engine, BasicRenderer) {
+define(['System/Engine', 'Renderer/BaseRenderer'], function (Engine, BaseRenderer) {
 
     describe("Engine", function () {
 
@@ -32,7 +32,7 @@ define(['System/Engine', 'Render/BasicRenderer'], function (Engine, BasicRendere
                         done();
                     }
                 },
-                renderer: new BasicRenderer()
+                renderer: new BaseRenderer()
             });
 
             expect(e.logicLoopRunning).toBeTruthy();
